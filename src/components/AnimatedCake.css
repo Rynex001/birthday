@@ -1,0 +1,66 @@
+/* Main container for positioning */
+.cake-container {
+  position: relative;
+  width: 350px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  z-index: 5; /* Ensure cake is above the final message */
+}
+
+/* Base style for the cake layers */
+.layer {
+  position: absolute;
+  box-sizing: border-box;
+  background-color: #D93662;
+  border: 4px solid #000;
+  z-index: 2;
+}
+.bottom-layer { width: 280px; height: 110px; bottom: 80px; border-radius: 50% / 45px; z-index: 1; }
+.top-layer { width: 220px; height: 100px; bottom: 180px; border-radius: 50% / 40px; z-index: 3; }
+
+/* Base style for the icing */
+.icing { position: absolute; background-color: #FFF; border: 4px solid #000; border-radius: 50% / 30px; }
+.bottom-icing { width: 280px; height: 50px; bottom: 150px; z-index: 2; }
+.top-icing { width: 220px; height: 45px; bottom: 245px; z-index: 4; }
+
+/* Individual drips */
+.drip { position: absolute; background-color: #FFF; border: 4px solid #000; border-top: none; box-sizing: border-box; }
+.drip1 { bottom: -18px; left: 30px; width: 40px; height: 20px; border-radius: 0 0 20px 20px; }
+.drip2 { bottom: -28px; left: 100px; width: 45px; height: 30px; border-radius: 0 0 25px 25px; }
+.drip3 { bottom: -22px; left: 180px; width: 40px; height: 25px; border-radius: 0 0 20px 20px; }
+.drip4 { bottom: -15px; left: 230px; width: 30px; height: 18px; border-radius: 0 0 15px 15px; }
+.drip5 { bottom: -20px; left: 30px; width: 35px; height: 22px; border-radius: 0 0 18px 18px; }
+.drip6 { bottom: -25px; left: 100px; width: 40px; height: 28px; border-radius: 0 0  20px 20px; }
+.drip7 { bottom: -18px; left: 160px; width: 35px; height: 20px; border-radius: 0 0 18px 18px; }
+
+/* Candle */
+.candle { position: absolute; width: 28px; height: 80px; bottom: 280px; background-image: linear-gradient(to right, #ffffff 70%, #e0e0e0 100%); border: 4px solid #000; z-index: 5; display: flex; flex-direction: column; justify-content: space-around; padding: 3px 0; box-sizing: border-box; animation: candle-wiggle 3s ease-in-out infinite; }
+@keyframes candle-wiggle { 0%, 100% { transform: rotate(-1deg); } 50% { transform: rotate(1deg); } }
+.wick { position: absolute; width: 6px; height: 12px; background-color: #333; border: 2px solid #000; border-bottom: none; border-radius: 2px 2px 0 0; top: -12px; left: 50%; transform: translateX(-50%); }
+.stripe { width: 100%; height: 15px; background-color: #F9A62B; border-top: 4px solid #000; border-bottom: 4px solid #000; }
+
+/* Flame */
+.flame { position: absolute; width: 32px; height: 45px; bottom: 355px; z-index: 6; background-color: #FDB44B; border: 4px solid #000; border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%; transform-origin: bottom center; animation: flicker-lively 1.2s ease-in-out infinite; }
+.flame-inner { position: absolute; width: 18px; height: 28px; bottom: 4px; left: 50%; transform: translateX(-50%); background-color: #FFDE7D; border-radius: inherit; }
+@keyframes flicker-lively { 0%, 100% { transform: scaleY(1) rotate(-1deg); } 25% { transform: scale(1.1, 0.9) rotate(2deg) translateX(1px); } 50% { transform: scaleY(0.95) rotate(-2deg); } 75% { transform: scale(1.05, 0.95) rotate(1deg) translateX(-1px); } }
+
+/* --- NEW BLOWING ANIMATION --- */
+.flame.blow-attempt-1 { animation: blow-attempt-1 1.2s ease-out; }
+@keyframes blow-attempt-1 {
+  0% { transform: scaleY(1) rotate(0); }
+  20% { transform: scale(0.3, 1.2) skewX(-45deg) translateX(-30px); opacity: 0.8; }
+  40% { transform: scale(0.8, 1) skewX(10deg); }
+  60% { transform: scale(0.2, 1.1) skewX(-35deg) translateX(-25px); opacity: 0.7; }
+  100% { transform: scaleY(1) rotate(0); }
+}
+
+/* Shadow */
+.shadow { position: absolute; width: 290px; height: 25px; background-color: #000; opacity: 0.25; border-radius: 50%; bottom: 70px; filter: blur(4px); z-index: 0; }
+/* Highlights */
+.highlight { position: absolute; background-color: rgba(255, 255, 255, 0.7); border-radius: 50%; }
+.highlight.small { width: 15px; height: 15px; top: 20px; left: 30px; }
+.highlight.medium { width: 10px; height: 10px; top: 70px; left: 230px; }
+.highlight.top { top: 20px; left: 25px; }

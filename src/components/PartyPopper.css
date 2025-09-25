@@ -1,0 +1,21 @@
+.popper-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  z-index: 100; /* On top of everything */
+}
+
+.confetti {
+  position: absolute;
+  width: 12px;
+  height: 22px;
+  border-radius: 4px;
+}
+
+.streamer {
+  position: absolute;
+  width: 6px;
+  height: 100px;
+}
