@@ -44,7 +44,7 @@ Forever Yours 💖`;
       const timer = setTimeout(() => {
         setDisplayedText(prev => prev + letter[currentIndex]);
         setCurrentIndex(prev => prev + 1);
-      }, 55); // <-- SPEED CHANGE
+      }, 65); // <-- SPEED CHANGE
       return () => clearTimeout(timer);
     } else {
       setIsComplete(true);
