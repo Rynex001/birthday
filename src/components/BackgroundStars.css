@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%; /* <-- KEY FIX: Changed from 100vw to 100% */
   height: 100vh;
   overflow: hidden;
   z-index: -1; /* Place it behind all other content */

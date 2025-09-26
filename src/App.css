@@ -1,14 +1,13 @@
-body {
+/* --- BODY AND HTML SETUP --- */
+html, body {
+  height: 100%;
   margin: 0;
+  padding: 0;
   font-family: 'Lobster', cursive;
-  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  overflow-x: hidden; /* <-- KEY FIX: Prevents horizontal scroll/shift */
 }
 
+/* --- APP CONTAINER TAKES OVER BACKGROUND AND LAYOUT --- */
 .App {
   text-align: center;
   position: relative;
@@ -18,7 +17,10 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%); /* <-- MOVED FROM BODY */
+  overflow: hidden; /* Keep this to contain animations */
 }
+
 
 /* --- FINAL MESSAGE STYLES - DESKTOP ONLY --- */
 .final-message-container {
@@ -51,7 +53,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  pointer-events: auto; /* <<< FIX: Re-enable clicks on the card and its children */
+  pointer-events: auto;
 }
 
 .card-shine {
