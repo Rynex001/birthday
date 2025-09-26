@@ -10,6 +10,7 @@ import './App.css';
 
 // --- PERFECTLY CENTERED FINAL MESSAGE COMPONENT ---
 const FinalMessage = ({ onSpecialMessageClick }) => {
+  // ... (rest of the FinalMessage component code is unchanged)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -163,13 +164,15 @@ const FinalMessage = ({ onSpecialMessageClick }) => {
   );
 };
 
+
 function App() {
   const [showBlowButton, setShowBlowButton] = useState(false);
   const [isBlowing, setIsBlowing] = useState(false);
   const [isCandleBlown, setIsCandleBlown] = useState(false);
   const [isCardOpen, setIsCardOpen] = useState(false);
   const [gustCount, setGustCount] = useState(0);
-  const [showConfetti, setShowConfetti] = useState(false);
+  // --- KEY FIX: Changed initial state from false to true ---
+  const [showConfetti, setShowConfetti] = useState(true);
   const [showSpecialMessage, setShowSpecialMessage] = useState(false);
 
   // Timer to show the "Blow the Candle" button
@@ -199,9 +202,10 @@ function App() {
           setIsCandleBlown(true);
           setIsBlowing(false);
 
-          // Show the final message with confetti after candle is blown
+          // Show the final message after candle is blown
           setTimeout(() => {
             setIsCardOpen(true);
+            // This line is now redundant but harmless
             setShowConfetti(true);
           }, 800);
         }, 1200);
@@ -221,6 +225,7 @@ function App() {
     <div className="App">
       <BackgroundStars />
       <WindGust isBlowing={isBlowing} gustCount={gustCount} />
+      {/* This will now be true on initial render */}
       {showConfetti && <Confetti />}
 
       <AnimatePresence>
