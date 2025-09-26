@@ -2,7 +2,6 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './AnimatedCake.css';
 
-// --- Animation Variants (no changes here) ---
 const cakeContainerVariants = {
   hidden: { opacity: 0, y: 50 },
   visible: {
@@ -11,19 +10,19 @@ const cakeContainerVariants = {
     transition: { delay: 1.2, type: 'spring', damping: 15, stiffness: 100, when: 'beforeChildren', staggerChildren: 0.2 },
   },
 };
+
 const pieceVariants = {
   hidden: { y: 40, opacity: 0 },
   visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 120 } },
 };
+
 const flameVariants = {
   hidden: { scale: 0, opacity: 0 },
   visible: { scale: 1, opacity: 1, transition: { delay: 2.2, type: 'spring', stiffness: 150, damping: 10 } },
-  exit: { x: -50, scale: 0, opacity: 0, transition: { duration: 0.7, ease: "easeOut" } }, // Changed exit animation
+  exit: { x: -50, scale: 0, opacity: 0, rotate: 45, transition: { duration: 0.7, ease: "easeOut" } },
 };
 
-// --- COMPONENT UPDATE ---
-// Now accepts `isCandleBlown` and `blowAttempt`
-const AnimatedCake = ({ isCandleBlown, blowAttempt }) => { 
+const AnimatedCake = ({ isCandleBlown, isBlowing, gustCount }) => {
   return (
     <motion.div
       className="cake-container"
@@ -31,10 +30,8 @@ const AnimatedCake = ({ isCandleBlown, blowAttempt }) => {
       initial="hidden"
       animate="visible"
     >
-      {/* Shadow */}
       <motion.div className="shadow" variants={pieceVariants}></motion.div>
 
-      {/* Layers, Icing, and Drips (no changes here) */}
       <motion.div className="layer bottom-layer" variants={pieceVariants}>
         <div className="highlight small"></div>
         <div className="highlight medium"></div>
@@ -54,18 +51,16 @@ const AnimatedCake = ({ isCandleBlown, blowAttempt }) => {
         <div className="drip drip7"></div>
       </motion.div>
 
-      {/* Candle */}
       <motion.div className="candle" variants={pieceVariants}>
         <div className="wick"></div>
         <div className="stripe"></div>
         <div className="stripe"></div>
       </motion.div>
 
-      {/* --- UPDATED FLAME LOGIC --- */}
       <AnimatePresence>
         {!isCandleBlown && (
           <motion.div
-            className={`flame ${blowAttempt === 1 ? 'blow-attempt-1' : ''}`}
+            className={`flame ${isBlowing ? (gustCount === 1 ? 'first-gust' : 'second-gust') : ''}`}
             variants={flameVariants}
             initial="hidden"
             animate="visible"

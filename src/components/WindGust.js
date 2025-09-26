@@ -2,33 +2,33 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './WindGust.css';
 
-const WindGust = ({ blowAttempt }) => {
+const WindGust = ({ isBlowing, gustCount }) => {
   const gustVariants = {
     initial: {
-      x: '100vw', // Start off-screen to the right
-      opacity: 0,
+      x: '100vw',
     },
     animate: {
-      x: '-100vw', // Animate across the entire screen
-      opacity: [0, 0.7, 0.7, 0], // Fade in, stay visible, then fade out
+      x: '-100vw',
       transition: {
-        duration: 1.2,
-        ease: 'easeIn',
-        times: [0, 0.2, 0.8, 1],
+        duration: gustCount === 1 ? 1 : 0.8,
+        ease: 'easeOut',
       },
     },
   };
 
   return (
     <AnimatePresence>
-      {blowAttempt > 0 && (
+      {isBlowing && (
         <motion.div
-          key={blowAttempt} // The key ensures the animation re-triggers
           className="gust-container"
           variants={gustVariants}
           initial="initial"
           animate="animate"
+          exit={{ opacity: 0 }}
+          key={gustCount} // This ensures a new animation for each gust
         >
+          <div className="wind-line"></div>
+          <div className="wind-line"></div>
           <div className="wind-line"></div>
           <div className="wind-line"></div>
           <div className="wind-line"></div>

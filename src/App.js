@@ -4,33 +4,173 @@ import AnimatedCake from './components/AnimatedCake';
 import BirthdayMessage from './components/BirthdayMessage';
 import BackgroundStars from './components/BackgroundStars';
 import Confetti from './components/Confetti';
-import PartyPopper from './components/PartyPopper';
-import WindGust from './components/WindGust'; // Import the new WindGust component
+import WindGust from './components/WindGust';
+import SpecialMessage from './components/SpecialMessage';
 import './App.css';
 
-// --- CORRECTED FINAL MESSAGE COMPONENT ---
-const FinalMessage = () => {
-  const line1 = "Happy";
-  const line2 = "Birthday";
-  const line3 = "Afreen!";
-  const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { delay: 0.5, staggerChildren: 0.3 } } };
-  const lineVariants = { hidden: { y: 100, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } } };
+// --- PERFECTLY CENTERED FINAL MESSAGE COMPONENT ---
+const FinalMessage = ({ onSpecialMessageClick }) => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.5,
+      },
+    },
+  };
+
+  const wordVariants = {
+    hidden: {
+      opacity: 0,
+      y: 100,
+      scale: 0.3,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        damping: 10,
+      },
+    },
+  };
+
+  const letterVariants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: (i) => ({
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delay: i * 0.1,
+        type: "spring",
+        stiffness: 300,
+      }
+    })
+  };
+
   return (
-    <motion.div className="final-message-container" variants={containerVariants} initial="hidden" animate="visible">
-      <motion.div variants={lineVariants} className="final-message-line">{line1}</motion.div>
-      <motion.div variants={lineVariants} className="final-message-line">{line2}</motion.div>
-      <motion.div variants={lineVariants} className="final-message-line large">{line3}</motion.div>
+    <motion.div
+      className="final-message-container"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {/* Large Card Background */}
+      <motion.div
+        className="message-card"
+        initial={{ scale: 0, rotate: -180 }}
+        animate={{ scale: 1, rotate: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 15, duration: 1.5 }}
+      >
+        <div className="card-shine"></div>
+        {/* Background Hearts (behind text) */}
+        <div className="background-hearts">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="background-heart"
+              style={{
+                left: `${Math.random() * 100}%`,
+                color: ['#ff6b6b', '#ffa726', '#ff4081', '#f48fb1'][Math.floor(Math.random() * 4)],
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${Math.random() * 3 + 6}s`
+              }}
+            >
+              ❤️
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Perfectly Centered Text Container */}
+        <div className="words-container">
+          <motion.div className="word-happy" variants={wordVariants}>
+            {"Happy".split("").map((char, i) => (
+              <motion.span key={i} custom={i} variants={letterVariants} className="bounce-letter">
+                {char}
+              </motion.span>
+            ))}
+          </motion.div>
+
+          <motion.div className="word-birthday" variants={wordVariants}>
+            {"Birthday".split("").map((char, i) => (
+              <motion.span key={i} custom={i} variants={letterVariants} className="bounce-letter">
+                {char}
+              </motion.span>
+            ))}
+          </motion.div>
+
+          <motion.div className="word-afreen" variants={wordVariants}>
+            {"Afreen!".split("").map((char, i) => (
+              <motion.span key={i} custom={i} variants={letterVariants} className="bounce-letter">
+                {char}
+              </motion.span>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Special Message Button */}
+        <motion.button
+          className="action-button special-message-button"
+          onClick={onSpecialMessageClick}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2, duration: 0.5 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          style={{
+            marginTop: '30px',
+            background: 'linear-gradient(45deg, #ff6b6b, #ffa726)',
+            zIndex: 10,
+            position: 'relative'
+          }}
+        >
+          💌 A Special Message For You 💌
+        </motion.button>
+      </motion.div>
+
+      {/* Floating Hearts (around text) */}
+      <div className="floating-hearts">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="floating-heart"
+            style={{
+              left: `${Math.random() * 100}%`,
+              color: ['#ff6b6b', '#ffa726', '#ff4081', '#f48fb1'][Math.floor(Math.random() * 4)]
+            }}
+            initial={{ y: 100, opacity: 0, scale: 0 }}
+            animate={{
+              y: -1000,
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+              x: Math.random() * 100 - 50
+            }}
+            transition={{
+              duration: Math.random() * 3 + 4,
+              delay: Math.random() * 2,
+              repeat: Infinity,
+            }}
+          >
+            ❤️
+          </motion.div>
+        ))}
+      </div>
     </motion.div>
   );
 };
 
-
 function App() {
-  const [showSurprise, setShowSurprise] = useState(false);
   const [showBlowButton, setShowBlowButton] = useState(false);
-  const [isAnimatingBlow, setIsAnimatingBlow] = useState(false); // To disable the button
-  const [blowAttempt, setBlowAttempt] = useState(0);
+  const [isBlowing, setIsBlowing] = useState(false);
   const [isCandleBlown, setIsCandleBlown] = useState(false);
+  const [isCardOpen, setIsCardOpen] = useState(false);
+  const [gustCount, setGustCount] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showSpecialMessage, setShowSpecialMessage] = useState(false);
 
   // Timer to show the "Blow the Candle" button
   useEffect(() => {
@@ -40,95 +180,100 @@ function App() {
     return () => clearTimeout(timer);
   }, [isCandleBlown]);
 
-  // --- NEW SINGLE-CLICK, TWO-ATTEMPT BLOWING LOGIC ---
   const handleBlowCandle = () => {
-    if (isAnimatingBlow) return; // Prevent multiple clicks
+    if (isBlowing) return;
+    setIsBlowing(true);
+    setShowBlowButton(false);
 
-    setIsAnimatingBlow(true);
-
-    // Attempt 1 (Fail)
-    setBlowAttempt(1);
-
-    // Schedule Attempt 2 (Success)
+    // First gust - doesn't blow out the candle
     setTimeout(() => {
-      setBlowAttempt(2); // Trigger second gust
-      setIsCandleBlown(true); // Blow out the candle
-      setShowBlowButton(false); // Hide the button
-    }, 1500); // 1.5 second delay between attempts
+      setIsBlowing(false);
+      setGustCount(1);
+
+      // Second gust after a short pause - blows out the candle
+      setTimeout(() => {
+        setIsBlowing(true);
+        setGustCount(2);
+
+        setTimeout(() => {
+          setIsCandleBlown(true);
+          setIsBlowing(false);
+
+          // Show the final message with confetti after candle is blown
+          setTimeout(() => {
+            setIsCardOpen(true);
+            setShowConfetti(true);
+          }, 800);
+        }, 1200);
+      }, 800);
+    }, 1000);
+  };
+
+  const handleSpecialMessageClick = () => {
+    setShowSpecialMessage(true);
+  };
+
+  const handleCloseSpecialMessage = () => {
+    setShowSpecialMessage(false);
   };
 
   return (
     <div className="App">
       <BackgroundStars />
-      <WindGust blowAttempt={blowAttempt} /> {/* Add the WindGust component */}
-      
-      <AnimatePresence>
-        {!isCandleBlown && <Confetti />}
-      </AnimatePresence>
-
-      {isCandleBlown && <PartyPopper />}
+      <WindGust isBlowing={isBlowing} gustCount={gustCount} />
+      {showConfetti && <Confetti />}
 
       <AnimatePresence>
-        {!isCandleBlown ? (
-          <motion.div key="initialMessage" exit={{ opacity: 0, y: -50, scale: 0.8, transition: { duration: 0.5 } }}>
+        {!isCardOpen && (
+          <motion.div
+            key="initialMessage"
+            exit={{ opacity: 0, y: -50, scale: 0.8, transition: { duration: 0.5 } }}
+          >
             <BirthdayMessage
               text="Happy Birthday, My Love!"
-              style={{ fontSize: '6rem', color: 'white', textShadow: '0 0 15px rgba(0,0,0,0.5)', fontFamily: "'Great Vibes', cursive", zIndex: 1 }}
+              style={{
+                fontSize: '70px',
+                color: 'white',
+                textShadow: '0 0 15px rgba(0,0,0,0.5)',
+                fontFamily: "'Great Vibes', cursive",
+                zIndex: 1,
+              }}
             />
           </motion.div>
-        ) : (
-          <FinalMessage key="finalMessage" />
         )}
       </AnimatePresence>
 
-      <AnimatedCake isCandleBlown={isCandleBlown} blowAttempt={blowAttempt} />
+      <AnimatePresence>
+        {isCardOpen && !showSpecialMessage && (
+          <FinalMessage onSpecialMessageClick={handleSpecialMessageClick} />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showSpecialMessage && (
+          <SpecialMessage onClose={handleCloseSpecialMessage} />
+        )}
+      </AnimatePresence>
+
+      <AnimatedCake isCandleBlown={isCandleBlown} isBlowing={isBlowing} gustCount={gustCount} />
 
       <div className="button-container">
         <AnimatePresence>
-          {showBlowButton && !isCandleBlown && (
+          {showBlowButton && (
             <motion.button
               className="action-button blow-button"
               onClick={handleBlowCandle}
-              disabled={isAnimatingBlow} // Disable button during animation
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20, scale: 0.8, transition: {duration: 0.3} }}
-              whileHover={{ scale: isAnimatingBlow ? 1 : 1.1 }} // Disable hover effect during animation
-              whileTap={{ scale: isAnimatingBlow ? 1 : 0.9 }}
-            >
-              Blow the Candle!
-            </motion.button>
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {!isCandleBlown && (
-            <motion.button
-              className="action-button special-message-button"
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0, scale: 0.8, transition: {duration: 0.3} }}
-              whileHover={{ scale: 1.1, boxShadow: "0px 0px 20px 5px #ff6b6b" }}
+              exit={{ opacity: 0, y: 20, transition: { duration: 0.3 } }}
+              whileHover={{ scale: 1.1, boxShadow: "0px 0px 30px 10px rgba(132, 250, 176, 0.5)" }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => setShowSurprise(true)}
             >
-              A Special Message For You
+              🎂 Blow the Candle! 🎂
             </motion.button>
           )}
         </AnimatePresence>
       </div>
-
-      <AnimatePresence>
-        {showSurprise && (
-          <motion.div className="surprise-modal" initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.7 }}>
-            <motion.p className="surprise-text" initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
-              You make my world brighter every single day. I love you more than words can say! ❤️
-            </motion.p>
-            <motion.button className="close-button" whileHover={{ scale: 1.1 }} onClick={() => setShowSurprise(false)}>
-              Close
-            </motion.button>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

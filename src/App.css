@@ -20,32 +20,183 @@ body {
   align-items: center;
 }
 
-/* --- CORRECTED FINAL MESSAGE STYLES --- */
+/* --- FINAL MESSAGE STYLES - DESKTOP ONLY --- */
 .final-message-container {
-  font-family: 'Fredoka One', cursive;
-  color: white;
-  text-shadow: 0 5px 15px rgba(0,0,0,0.4);
-  z-index: 4; /* Position it BEHIND the cake (cake is z-index 5) */
   position: absolute;
-  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none; /* Make it non-interactive */
+  align-items: center;
+  z-index: 20;
+  pointer-events: none;
 }
 
-.final-message-line {
-  font-size: 8rem;
-  line-height: 0.9;
-  -webkit-text-stroke: 4px black;
-  text-stroke: 4px black;
-  paint-order: stroke fill;
+/* Large Card Background */
+.message-card {
+  position: absolute;
+  width: 800px;
+  height: 600px;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  border-radius: 40px;
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.4),
+    inset 0 -15px 30px rgba(255,255,255,0.4),
+    inset 0 15px 30px rgba(255,255,255,0.4);
+  border: 12px solid #fff;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto; /* <<< FIX: Re-enable clicks on the card and its children */
 }
-.final-message-line.large {
-  font-size: 9rem;
+
+.card-shine {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  right: -12px;
+  bottom: -12px;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+  border-radius: 52px;
+  animation: shine 3s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Text Styles - Perfectly Centered */
+.words-container {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.word-happy, .word-birthday, .word-afreen {
+  font-family: 'Fredoka One', cursive;
+  color: transparent;
+  background: linear-gradient(45deg, #ff6b6b, #ffa726, #ff4081, #7e57c2, #26c6da, #66bb6a);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow:
+    4px 4px 0px rgba(0,0,0,0.2),
+    8px 8px 0px rgba(0,0,0,0.1);
+  line-height: 1;
+  margin: 0;
+  animation: gradientShift 3s ease infinite, float 6s ease-in-out infinite;
+  pointer-events: auto;
+  text-align: center;
+  white-space: nowrap;
+  width: 100%;
+}
+
+/* Perfectly centered font sizes and spacing */
+.word-happy {
+  font-size: 100px;
+  margin-bottom: 10px;
+  animation-delay: 0s;
+}
+
+.word-birthday {
+  font-size: 90px;
+  margin-bottom: 10px;
+  animation-delay: 0.5s;
+}
+
+.word-afreen {
+  font-size: 110px;
+  animation-delay: 1s;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+}
+
+/* Individual Letter Animations */
+.bounce-letter {
+  display: inline-block;
+  cursor: pointer;
+  text-shadow:
+    3px 3px 0px rgba(0,0,0,0.3),
+    6px 6px 0px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.bounce-letter:hover {
+  transform: scale(1.4) translateY(-8px);
+}
+
+/* Floating Hearts Behind Text */
+.background-hearts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.background-heart {
+  position: absolute;
+  font-size: 40px;
+  opacity: 0.3;
+  animation: heartFloat 8s ease-in-out infinite;
+}
+
+@keyframes heartFloat {
+  0% {
+    transform: translateY(100px) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-50px) rotate(180deg) scale(1);
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-200px) rotate(360deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Floating Hearts Around Text */
+.floating-hearts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 24px;
 }
 
 /* --- BUTTON CONTAINER & STYLES --- */
@@ -58,30 +209,48 @@ body {
   margin-top: 10px;
   height: 150px;
   position: relative;
-  z-index: 5;
+  z-index: 15;
 }
 
 .action-button {
-  padding: 15px 30px;
-  font-size: 1.5rem;
+  padding: 20px 40px;
+  font-size: 24px;
   border-radius: 50px;
   border: none;
   cursor: pointer;
   font-family: 'Lobster', cursive;
   color: white;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  transition: box-shadow 0.3s ease-in-out;
+  box-shadow:
+    0 15px 35px rgba(0,0,0,0.3),
+    0 0 0 5px rgba(255,255,255,0.5);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
 }
 
-.action-button:disabled {
-  cursor: not-allowed;
-  filter: brightness(0.8);
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s;
 }
 
-.blow-button { background: linear-gradient(45deg, #84fab0, #8fd3f4); }
-.special-message-button { background: linear-gradient(45deg, #ff6b6b, #f06595); }
+.action-button:hover::before {
+  left: 100%;
+}
 
-/* --- SURPRISE MESSAGE MODAL STYLES --- */
-.surprise-modal { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 20px; z-index: 20; }
-.surprise-text { color: white; font-size: 3rem; max-width: 800px; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-.close-button { margin-top: 20px; padding: 10px 25px; font-size: 1.2rem; border-radius: 50px; border: none; cursor: pointer; font-family: 'Lobster', cursive; background-color: #f1f1f1; color: #333; }
+.blow-button {
+  background: linear-gradient(45deg, #84fab0, #8fd3f4, #84fab0);
+  background-size: 200% 200%;
+  animation: buttonGlow 2s ease infinite;
+}
+
+@keyframes buttonGlow {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
