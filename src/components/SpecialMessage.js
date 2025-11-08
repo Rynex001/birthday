@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'; // Imported useRef
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import './SpecialMessage.css';
 
 const SpecialMessage = ({name, onClose }) => {
