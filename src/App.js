@@ -8,9 +8,9 @@ import WindGust from './components/WindGust';
 import SpecialMessage from './components/SpecialMessage';
 import './App.css';
 
-// --- PERFECTLY CENTERED FINAL MESSAGE COMPONENT ---
+const birthdayName = process.env.REACT_APP_BIRTHDAY_NAME
+
 const FinalMessage = ({ onSpecialMessageClick }) => {
-  // ... (rest of the FinalMessage component code is unchanged)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -60,7 +60,6 @@ const FinalMessage = ({ onSpecialMessageClick }) => {
       initial="hidden"
       animate="visible"
     >
-      {/* Large Card Background */}
       <motion.div
         className="message-card"
         initial={{ scale: 0, rotate: -180 }}
@@ -68,7 +67,6 @@ const FinalMessage = ({ onSpecialMessageClick }) => {
         transition={{ type: "spring", stiffness: 100, damping: 15, duration: 1.5 }}
       >
         <div className="card-shine"></div>
-        {/* Background Hearts (behind text) */}
         <div className="background-hearts">
           {[...Array(20)].map((_, i) => (
             <motion.div
@@ -86,7 +84,6 @@ const FinalMessage = ({ onSpecialMessageClick }) => {
           ))}
         </div>
 
-        {/* Perfectly Centered Text Container */}
         <div className="words-container">
           <motion.div className="word-happy" variants={wordVariants}>
             {"Happy".split("").map((char, i) => (
@@ -104,8 +101,8 @@ const FinalMessage = ({ onSpecialMessageClick }) => {
             ))}
           </motion.div>
 
-          <motion.div className="word-afreen" variants={wordVariants}>
-            {"Afreen!".split("").map((char, i) => (
+          <motion.div className="word-name" variants={wordVariants}>
+            {`${birthdayName}!`.split("").map((char, i) => (
               <motion.span key={i} custom={i} variants={letterVariants} className="bounce-letter">
                 {char}
               </motion.span>
@@ -171,11 +168,10 @@ function App() {
   const [isCandleBlown, setIsCandleBlown] = useState(false);
   const [isCardOpen, setIsCardOpen] = useState(false);
   const [gustCount, setGustCount] = useState(0);
-  // --- KEY FIX: Changed initial state from false to true ---
+
   const [showConfetti, setShowConfetti] = useState(true);
   const [showSpecialMessage, setShowSpecialMessage] = useState(false);
 
-  // Timer to show the "Blow the Candle" button
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!isCandleBlown) setShowBlowButton(true);
@@ -256,7 +252,7 @@ function App() {
 
       <AnimatePresence>
         {showSpecialMessage && (
-          <SpecialMessage onClose={handleCloseSpecialMessage} />
+          <SpecialMessage name={birthdayName} onClose={handleCloseSpecialMessage} />
         )}
       </AnimatePresence>
 
