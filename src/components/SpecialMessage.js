@@ -2,15 +2,14 @@ import React, { useState, useEffect, useRef } from 'react'; // Imported useRef
 import { motion, AnimatePresence } from 'framer-motion';
 import './SpecialMessage.css';
 
-const SpecialMessage = ({ onClose }) => {
+const SpecialMessage = ({name, onClose }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
-  // Create a ref for the scrollable container
   const letterContainerRef = useRef(null);
 
-  const letter = `My Dearest Afreen,
+  const letter = `My Dearest ${name},
 
 Again Happy Birthday to the most percious person I know.
 On this special day of yours I want you to know that you are very important to me!
