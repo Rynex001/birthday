@@ -75,14 +75,14 @@ git clone https://github.com/Rynex001/birthday.git
 cd birthday
 ```
 **2. Install Dependencies:**
-```
 Using npm (Node Package Manager), install the required libraries from package.json.
+```
 npm install
 ```
 
 **3. Run the Development Server:**
-```
 This will start the app on a local server, usually at http://localhost:3000.
+```
 npm start
 ```
 
