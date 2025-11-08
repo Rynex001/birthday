@@ -74,7 +74,7 @@ To run this project on your local machine, follow these steps.
 git clone https://github.com/Rynex001/birthday.git
 cd birthday
 ```
-**2. Install Dependencies:
+**2. Install Dependencies:**
 ```
 Using npm (Node Package Manager), install the required libraries from package.json.
 npm install
