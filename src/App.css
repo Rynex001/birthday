@@ -81,7 +81,7 @@ html, body {
   width: 100%;
 }
 
-.word-happy, .word-birthday, .word-afreen {
+.word-happy, .word-birthday, .word-name {
   font-family: 'Fredoka One', cursive;
   color: transparent;
   background: linear-gradient(45deg, #ff6b6b, #ffa726, #ff4081, #7e57c2, #26c6da, #66bb6a);
