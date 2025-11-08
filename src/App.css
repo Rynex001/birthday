@@ -1,13 +1,12 @@
-/* --- BODY AND HTML SETUP --- */
+
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
   font-family: 'Lobster', cursive;
-  overflow-x: hidden; /* <-- KEY FIX: Prevents horizontal scroll/shift */
+  overflow-x: hidden; 
 }
 
-/* --- APP CONTAINER TAKES OVER BACKGROUND AND LAYOUT --- */
 .App {
   text-align: center;
   position: relative;
@@ -22,7 +21,6 @@ html, body {
 }
 
 
-/* --- FINAL MESSAGE STYLES - DESKTOP ONLY --- */
 .final-message-container {
   position: absolute;
   top: 0;
@@ -72,7 +70,6 @@ html, body {
   100% { transform: translateX(100%); }
 }
 
-/* Text Styles - Perfectly Centered */
 .words-container {
   position: relative;
   z-index: 3;
@@ -116,7 +113,7 @@ html, body {
   animation-delay: 0.5s;
 }
 
-.word-afreen {
+.word-name {
   font-size: 110px;
   animation-delay: 1s;
 }
